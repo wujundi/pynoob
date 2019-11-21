@@ -11,6 +11,7 @@ print(d.head())
 d.describe() #数据基本统计量
 print(d.describe())
 
+
 print(d2)
 d2.head() #预览前5行数据
 print(d2.head())

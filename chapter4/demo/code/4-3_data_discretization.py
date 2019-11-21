@@ -1,13 +1,17 @@
 #-*- coding: utf-8 -*-
-#数据规范化
+#数据规范化 - 连续属性离散化
 import pandas as pd
 
 datafile = '../data/discretization_data.xls' #参数初始化
 data = pd.read_excel(datafile) #读取数据
 data = data[u'肝气郁结证型系数'].copy()
+print(data)
+
+# 都离散成四类
 k = 4
 
-d1 = pd.cut(data, k, labels = range(k)) #等宽离散化，各个类比依次命名为0,1,2,3
+#等宽离散化，各个类比依次命名为0,1,2,3
+d1 = pd.cut(data, k, labels = range(k))
 
 #等频率离散化
 w = [1.0*i/k for i in range(k+1)]
@@ -15,6 +19,7 @@ w = data.describe(percentiles = w)[4:4+k+1] #使用describe函数自动计算分
 w[0] = w[0]*(1-1e-10)
 d2 = pd.cut(data, w, labels = range(k))
 
+#基于聚类分析的离散化
 from sklearn.cluster import KMeans #引入KMeans
 kmodel = KMeans(n_clusters = k, n_jobs = 4) #建立模型，n_jobs是并行数，一般等于CPU数较好
 kmodel.fit(data.reshape((len(data), 1))) #训练模型
@@ -36,6 +41,5 @@ def cluster_plot(d, k): #自定义作图函数来显示聚类结果
   return plt
 
 cluster_plot(d1, k).show()
-
 cluster_plot(d2, k).show()
 cluster_plot(d3, k).show()

@@ -9,3 +9,4 @@ data = pd.read_excel(datafile, header = None) #读取数据
 (data - data.min())/(data.max() - data.min()) #最小-最大规范化
 (data - data.mean())/data.std() #零-均值规范化
 data/10**np.ceil(np.log10(data.abs().max())) #小数定标规范化
+#                log10看有多少个0 （ data.abs().max()取最大值 ）

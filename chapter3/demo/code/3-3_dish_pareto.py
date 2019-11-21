@@ -6,7 +6,9 @@ import pandas as pd
 #初始化参数
 dish_profit = '../data/catering_dish_profit.xls' #餐饮菜品盈利数据
 data = pd.read_excel(dish_profit, index_col = u'菜品名')
+print(data) # 到这个时候，data 变量还是完整的反映着 exceL 中的状态的
 data = data[u'盈利'].copy()
+print(data) # 这个copy 使得 data 只剩下了之前选为 index 的【菜名列】和 copy 上去的【盈利】列
 data.sort(ascending = False)
 
 import matplotlib.pyplot as plt #导入图像库
